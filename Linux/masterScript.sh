@@ -81,6 +81,7 @@ ip6tables -P OUTPUT DROP
 chkrootkit -q
 rkhunter --update
 rkhunter --propupd
+rkhunter
 lynis -c
 freshclam
 clamscan -r -i --exclude-dir="^/sys" /
