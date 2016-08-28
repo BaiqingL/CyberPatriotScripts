@@ -14,7 +14,7 @@ sudo lsof  -i -n -P
 sudo netstat -tulpn
 
 #--------- Update Using Apt-Get ----------------
-sudo apt-get update --no-allow-insecure-repositories; apt-get dist-upgrade -y; apt-get install -f -y; apt-get autoremove -y; apt-get autoclean -y; apt-get check
+sudo apt-get update --no-allow-insecure-repositories; sudo apt-get dist-upgrade -y; sudo apt-get install -f -y; sudo apt-get autoremove -y; sudo apt-get autoclean -y; sudo apt-get check
 
 #--------- Download programs ----------------
 sudo apt-get install  -y firefox hardinfo chkrootkit iptables portsentry lynis ufw sysv-rc-conf nessus clamav
