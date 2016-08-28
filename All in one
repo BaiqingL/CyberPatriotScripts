@@ -1,3 +1,4 @@
+#!/bin/sh
 cd ~
 #yo whadup dawg
 sudo apt-get update && sudo apt-get dist-upgrade && sudo apt-get install ufw && sudo ufw allow ssh && sudo ufw allow http && sudo ufw enable && sudo echo "tmpfs     /dev/shm     tmpfs     defaults,noexec,nosuid     0     0" >> /etc/fstab
