@@ -1,6 +1,6 @@
-#Hitchhiker’s Guide to Securing Cisco
+Hitchhiker’s Guide to Securing Cisco
 Adapted From From the Book CCENT by Todd Lammle
-#Don’t Panic!
+Don’t Panic!
 All of which that is below can be automatically done by using Autosecure. However, these are here to provide a reference in case such a reference is needed. (For example, when autosecure can’t be used because it would disable a critical service, such as HTTP) Although, autosecure does more.
 
 Make sure you look up interface names using “show ip int brief”! Some commands are interface specific! 
