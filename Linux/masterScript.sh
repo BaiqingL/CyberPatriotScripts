@@ -18,7 +18,7 @@ netstat -tulpn
 apt-get update --no-allow-insecure-repositories; apt-get dist-upgrade -y; apt-get install -f -y; apt-get autoremove -y; apt-get autoclean -y; apt-get check
 
 #--------- Download programs ----------------
-apt-get install  -y firefox hardinfo chkrootkit iptables portsentry lynis ufw sysv-rc-conf nessus clamav
+apt-get install  -y hardinfo chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav
 apt-get install  -y --reinstall coreutils
 
 #--------- Find Dangerous Files ----------------
