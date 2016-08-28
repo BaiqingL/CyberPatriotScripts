@@ -37,6 +37,41 @@ find /home -name '*.png' -type f -delete
 find /home -name '*.jpg' -type f -delete
 find /home -name '*.jpeg' -type f -delete
 
+#--------- Setup Firewall ----------------
+#Please verify that the firewall wont block any services, such as an Email server, when defaulted.
+#I will back up iptables for you in and put it in /iptables/rules.v4.bak and /iptables/rules.v6.bak
+
+#Backup
+mkdir /iptables/
+iptables-save > /iptables/rules.v4.bak
+ip6tables-save > /iptables/rules.v6.bak
+
+#Uninstall UFW and install iptables
+apt-get purge ufw
+apt-get install iptables
+apt-get install ip6tables
+
+#Clear out and default iptables
+iptables -t nat -F
+iptables -t mangle -F
+iptables -t nat -X
+iptables -t mangle -X
+iptables -F
+iptables -X
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+
+ip6tables -t nat -F
+ip6tables -t mangle -F
+ip6tables -t nat -X
+ip6tables -t mangle -X
+ip6tables -F
+ip6tables -X
+ip6tables -P INPUT DROP
+ip6tables -P FORWARD DROP
+ip6tables -P OUTPUT DROP
+
 #--------- Scan For Vulnerabilities and viruses ----------------
 chkrootkit -q
 lynis -c
