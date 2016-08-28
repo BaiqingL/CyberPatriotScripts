@@ -15,10 +15,15 @@ lsof  -i -n -P
 netstat -tulpn
 
 #--------- Update Using Apt-Get ----------------
-apt-get update --no-allow-insecure-repositories; apt-get dist-upgrade -y; apt-get install -f -y; apt-get autoremove -y; apt-get autoclean -y; apt-get check
+apt-get update --no-allow-insecure-repositories
+apt-get dist-upgrade -y
+apt-get install -f -y
+apt-get autoremove -y
+apt-get autoclean -y
+apt-get check
 
 #--------- Download programs ----------------
-apt-get install  -y hardinfo chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav
+apt-get install  -y hardinfo chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter
 apt-get install  -y --reinstall coreutils
 
 #--------- Find Dangerous Files ----------------
@@ -74,6 +79,8 @@ ip6tables -P OUTPUT DROP
 
 #--------- Scan For Vulnerabilities and viruses ----------------
 chkrootkit -q
+rkhunter --update
+rkhunter --propupd
 lynis -c
 freshclam
 clamscan -r -i --exclude-dir="^/sys" /
