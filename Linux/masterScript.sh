@@ -30,7 +30,7 @@ apt-get check
 apt-get install  -y hardinfo chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter
 apt-get install  -y --reinstall coreutils
 
-#--------- Find Dangerous Files ----------------
+#--------- Delete em' pirates, eh?  ----------------
 find / -name '*.mp3' -type f -delete
 find / -name '*.mov' -type f -delete
 find / -name '*.mp4' -type f -delete
