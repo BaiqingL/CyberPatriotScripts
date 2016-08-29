@@ -67,3 +67,4 @@ dism /online /disable-feature /featurename:IIS-FTPExtensibility >NUL
 dism /online /disable-feature /featurename:TFTP >NUL
 dism /online /disable-feature /featurename:TelnetClient >NUL
 dism /online /disable-feature /featurename:TelnetServer >NUL
+PAUSE
