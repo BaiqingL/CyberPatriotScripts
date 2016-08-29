@@ -1,3 +1,13 @@
+@echo off
+echo Check for Admn
+net sessions
+if %errorlevel%==0 (
+echo Success
+) else (
+echo No admin
+pause
+exit
+)
 REM Turn on UAC
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 1 /f
 REM No Remote Desktop
