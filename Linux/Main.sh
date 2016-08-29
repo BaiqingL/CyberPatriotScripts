@@ -99,9 +99,9 @@ iptables-save > /iptables/rules.v4.bak
 ip6tables-save > /iptables/rules.v6.bak
 
 #Uninstall UFW and install iptables
-apt-get purge ufw
-apt-get install iptables
-apt-get install ip6tables
+apt-get purge -y ufw
+apt-get install -y iptables
+apt-get install -y ip6tables
 
 #Clear out and default iptables
 iptables -t nat -F
