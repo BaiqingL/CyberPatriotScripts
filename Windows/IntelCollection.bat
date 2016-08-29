@@ -23,3 +23,5 @@ wmic startup list full > StartupLists.txt
 if %errorlevel%==1 echo Startup Processes failed to write
 net start > StartedProcesses.txt
 if %errorlevel%==1 echo Started processes failed to write
+reg export HKLM\Software\Microsoft\Windows\CurrentVersion\Run  Run.reg
+if %errorlevel%==1 echo Run processes failed to write
