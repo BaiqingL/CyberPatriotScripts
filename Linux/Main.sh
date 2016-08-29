@@ -1,8 +1,6 @@
 #!/bin/sh
 #MIT Licence 
 #Copyright (c) Ethan Perry, Andy Lyu
-#Welcome to CyberPatriot. I'll be your guide.
-
 unalias -a #Get rid of aliases
 
 #--------- Change Root Password ----------------
