@@ -49,6 +49,9 @@ find /home -name '*.gif' -type f -delete
 find /home -name '*.png' -type f -delete
 find /home -name '*.jpg' -type f -delete
 find /home -name '*.jpeg' -type f -delete
+cd / && ls -laR | grep rwxrwxrwx | grep -v "lrwx" &> /tmp/777s
+echo "777 Files: "
+cat /tmp/777s
 
 #--------- Setup Firewall ----------------
 #Please verify that the firewall wont block any services, such as an Email server, when defaulted.
