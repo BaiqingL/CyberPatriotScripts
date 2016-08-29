@@ -7,4 +7,4 @@ REM Listing possible penetrations
 echo Staring to output active processes!
 wmic process list brief > BriefProcesses.txt
 wmic process list full >FullProcesses.txt
-wmic startup list full > startupLists.txt
+wmic startup list full > StartupLists.txt
