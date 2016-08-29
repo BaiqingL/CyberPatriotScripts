@@ -61,8 +61,8 @@ apt-get autoclean -y
 apt-get check
 
 #--------- Download programs ----------------
-apt-get install-y chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter apparmor apparmor-profiles
-apt-get install-y --reinstall coreutils
+apt-get install -y chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter apparmor apparmor-profiles
+apt-get install -y --reinstall coreutils
 
 #--------- Configure Automatic Updates ----------------
 cat /etc/apt/apt.conf.d/10periodic | grep APT::Periodic::Update-Package-Lists | grep 0 >> /dev/null
@@ -85,7 +85,7 @@ find /home -name '*.gif' -type f -delete
 find /home -name '*.png' -type f -delete
 find /home -name '*.jpg' -type f -delete
 find /home -name '*.jpeg' -type f -delete
-cd / && ls -laR | grep rwxrwxrwx | grep -v "lrwx" &> /tmp/777s
+cd / && ls -laR 2> /dev/null | grep rwxrwxrwx | grep -v "lrwx" &> /tmp/777s
 echo "777 Files: "
 cat /tmp/777s
 
