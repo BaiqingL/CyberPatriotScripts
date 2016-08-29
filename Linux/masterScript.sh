@@ -4,7 +4,10 @@
 #Copyright (c) Ethan Perry, Andy Lyu
 
 #Welcome to CyberPatriot. I'll be your guide.
+if (whoami != root)
+  then echo "Please run as root"
 
+  else (
 #--------- Manual File Inspection ----------------
 nano /etc/apt/sources.list #check for malicious sources
 nano /etc/resolv.conf #make sure if safe, use 8.8.8.8 for name server
@@ -89,3 +92,6 @@ rkhunter -c
 lynis -c
 freshclam
 clamscan -r -i --exclude-dir="^/sys" /
+)
+fi
+exit
