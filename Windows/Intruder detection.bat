@@ -4,9 +4,9 @@ REM Windows Defender scan
 cd C:\Program Files\Windows Defender\
 MpCmdRun.exe -Scan 2
 REM Listing possible penetrations
-wmic process list brief
+wmic process list brief > brief.txt
 PAUSE
-wmic process list full
+wmic process list full >fullprocess.txt
 PAUSE
-wmic startup list full
+wmic startup list full > startuplists.txt
 PAUSE
