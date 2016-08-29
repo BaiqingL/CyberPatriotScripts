@@ -1,7 +1,7 @@
 #!/bin/sh
 #MIT Licence 
 #Copyright (c) Ethan Perry, Andy Lyu
-#Welcome to CyberPatriot. I'll be your guide.
+echo "Welcome to CyberPatriot. I'll be your guide."
 
 unalias -a #Get rid of aliases
 
@@ -71,6 +71,7 @@ sed -i 's/APT::Periodic::Update-Package-Lists "0"/APT::Periodic::Update-Package-
 
 #--------- Delete em' pirates, eh? (Delete Dangerous Files) ----------------
 find / -name '*.mp3' -type f -delete
+find / -name '*.torrent' -type f -delete
 find / -name '*.mov' -type f -delete
 find / -name '*.mp4' -type f -delete
 find / -name '*.avi' -type f -delete
