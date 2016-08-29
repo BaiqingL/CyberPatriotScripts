@@ -13,7 +13,8 @@ REM Windows Defender scan
 cd C:\Program Files\Windows Defender\
 MpCmdRun.exe -Scan 2
 REM Listing possible penetrations
-echo Staring to output active processes!
+cd C:\
+echo Staring to output active processes to dir C:\!
 wmic process list brief > BriefProcesses.txt
 if %errorlevel%==1 echo Brief Processes failed to write
 wmic process list full >FullProcesses.txt
