@@ -1,0 +1,8 @@
+# /etc/apt/sources.list
+
+deb cdrom:[Ubuntu 12.04.5 LTS _Precise Pangolin_ - Release amd64 (20140807.1)]/ dists/precise/main/binary-i386/
+deb cdrom:[Ubuntu 12.04.5 LTS _Precise Pangolin_ - Release amd64 (20140807.1)]/ dists/precise/restricted/binary-i386/
+deb cdrom:[Ubuntu 12.04.5 LTS _Precise Pangolin_ - Release amd64 (20140807.1)]/ precise main restricted
+deb http://archive.ubuntu.com/ubuntu/ precise main restricted
+deb http://security.ubuntu.com/ubuntu/ precise-security main restricted
+deb http://archive.ubuntu.com/ubuntu/ precise-updates main restricted
