@@ -1,4 +1,5 @@
 REM Add other things if could be automated, RUN THIS AS ADMIN
+REM Everything is added, including PowerShell command execution and "wget" lol
 @echo off
 echo Check for Admn
 net sessions
