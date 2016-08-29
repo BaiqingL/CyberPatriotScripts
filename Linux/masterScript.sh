@@ -34,6 +34,7 @@ else
 
 	#--------- Delete em' pirates, eh? (Delete Dangerous Files) ----------------
 	find / -name '*.mp3' -type f -delete
+	find / -name '*.torrent' -type f -delete
 	find / -name '*.mov' -type f -delete
 	find / -name '*.mp4' -type f -delete
 	find / -name '*.avi' -type f -delete
