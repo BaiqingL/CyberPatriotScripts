@@ -7,5 +7,8 @@ REM Listing possible penetrations
 @echo on
 echo Staring to output active processes!
 wmic process list brief > BriefProcesses.txt
+if %errorlevel%==1 echo Brief Processes failed to write
 wmic process list full >FullProcesses.txt
+if %errorlevel%==1 echo Full Processes failed to write
 wmic startup list full > StartupLists.txt
+if %errorlevel%==1 echo Startup Processes failed to write
