@@ -21,3 +21,5 @@ wmic process list full >FullProcesses.txt
 if %errorlevel%==1 echo Full Processes failed to write
 wmic startup list full > StartupLists.txt
 if %errorlevel%==1 echo Startup Processes failed to write
+net start > StartedProcesses.txt
+if %errorlevel%==1 echo Started processes failed to write
