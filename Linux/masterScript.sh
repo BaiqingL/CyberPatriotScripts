@@ -16,6 +16,7 @@ nano /etc/rc.local #should be empty except for 'exit 0'
 nano /etc/sysctl.conf #change net.ipv4.tcp_syncookies entry from 0 to 1
 nano /etc/lightdm/lightdm.conf #allow_guest=false, remove autologin
 nano /etc/ssh/sshd_config #Look for PermitRootLogin and set to no
+crontab -e #make sure crontab is empty
 
 #--------- Manual Network Inspection ----------------
 lsof  -i -n -P
@@ -30,7 +31,7 @@ apt-get autoclean -y
 apt-get check
 
 #--------- Download programs ----------------
-apt-get install  -y hardinfo chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter
+apt-get install  -y hardinfo chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter apparmor apparmor-profiles
 apt-get install  -y --reinstall coreutils
 
 #--------- Delete em' pirates, eh? (Delete Dangerous Files) ----------------
