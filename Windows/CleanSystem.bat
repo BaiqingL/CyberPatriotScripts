@@ -2,9 +2,9 @@
 echo Check for Admn
 net sessions
 if %errorlevel%==0 (
-echo Success
+echo Success, Obtained Admin Rights
 ) else (
-echo No admin
+echo Failure, No Admin Rights
 pause
 exit
 )
