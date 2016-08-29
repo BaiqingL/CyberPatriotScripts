@@ -1,7 +1,7 @@
 #!/bin/sh
 #MIT Licence 
 #Copyright (c) Ethan Perry, Andy Lyu
-echo "Welcome to CyberPatriot. I'll be your guide."
+#Welcome to CyberPatriot. I'll be your guide.
 
 unalias -a #Get rid of aliases
 
@@ -26,12 +26,12 @@ chown -R root:root /etc/apache2
 chown -R root:root /etc/apache
 
 if [ -e /etc/apache2/apache2.conf ]; then
-echo \<Directory \> >> /etc/apache2/apache2.conf
-echo -e ' \t AllowOverride None' >> /etc/apache2/apache2.conf
-echo -e ' \t Order Deny,Allow' >> /etc/apache2/apache2.conf
-echo -e ' \t Deny from all' >> /etc/apache2/apache2.conf
-echo \<Directory \/\> >> /etc/apache2/apache2.conf
-echo UserDir disabled root >> /etc/apache2/apache2.conf
+	echo \<Directory \> >> /etc/apache2/apache2.conf
+	echo -e ' \t AllowOverride None' >> /etc/apache2/apache2.conf
+	echo -e ' \t Order Deny,Allow' >> /etc/apache2/apache2.conf
+	echo -e ' \t Deny from all' >> /etc/apache2/apache2.conf
+	echo \<Directory \/\> >> /etc/apache2/apache2.conf
+	echo UserDir disabled root >> /etc/apache2/apache2.conf
 fi
 
 #--------- Manual File Inspection ----------------
@@ -67,11 +67,11 @@ apt-get install-y --reinstall coreutils
 #--------- Configure Automatic Updates ----------------
 cat /etc/apt/apt.conf.d/10periodic | grep APT::Periodic::Update-Package-Lists | grep 0 >> /dev/null
 if [ $?==0 ]; then
-sed -i 's/APT::Periodic::Update-Package-Lists "0"/APT::Periodic::Update-Package-Lists "1"/g' /etc/apt/apt.conf.d/10periodic
+	sed -i 's/APT::Periodic::Update-Package-Lists "0"/APT::Periodic::Update-Package-Lists "1"/g' /etc/apt/apt.conf.d/10periodic
+fi
 
 #--------- Delete em' pirates, eh? (Delete Dangerous Files) ----------------
 find / -name '*.mp3' -type f -delete
-find / -name '*.torrent' -type f -delete
 find / -name '*.mov' -type f -delete
 find / -name '*.mp4' -type f -delete
 find / -name '*.avi' -type f -delete
