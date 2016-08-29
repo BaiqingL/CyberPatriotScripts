@@ -5,7 +5,7 @@ objWMIService.Get("Win32_LogicalFileSecuritySetting='" & strFileName & "'")
 intRetVal = objFileSecuritySettings.GetSecurityDescriptor(objSD)
 
 If intRetVal = 0 Then
-WScript.Echo "Owner: " & objSD.Owner.Domain & "\" & objSD.Owner.Name
+WScript.Echo "The owner is: " & objSD.Owner.Domain & "\" & objSD.Owner.Name
 Else
-WScript.Echo "Couldn't retrieve security descriptor."
+WScript.Echo "Couldn't retrieve, exiting."
 End If
