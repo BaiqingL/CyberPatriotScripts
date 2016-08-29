@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #MIT Licence 
-#Copyright (c) Ethan Perry, VBQL
+#Copyright (c) Ethan Perry, Andy Lyu
 
 #Welcome to CyberPatriot. I'll be your guide.
 
