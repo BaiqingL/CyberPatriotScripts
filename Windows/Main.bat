@@ -92,8 +92,8 @@ dism /online /disable-feature /featurename:IIS-FTPExtensibility >NUL
 dism /online /disable-feature /featurename:TFTP >NUL
 dism /online /disable-feature /featurename:TelnetClient >NUL
 dism /online /disable-feature /featurename:TelnetServer >NUL
-REM START SCAN!
+REM START SYS INTEG SCAN!
 Sfc.exe /scannow
-REM PowerShell!
+REM PowerShell RootKit detection start
 powershell Invoke-WebRequest -OutFile MBRTKit.exe https://data-cdn.mbamupdates.com/web/mbar-1.09.3.1001.exe
 MBRTKit.exe
