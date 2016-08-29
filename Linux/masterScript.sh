@@ -1,4 +1,8 @@
 #!/bin/sh
+
+#MIT Licence 
+#Copyright (c) Ethan Perry, VBQL
+
 #Welcome to CyberPatriot. I'll be your guide.
 
 #--------- Manual File Inspection ----------------
