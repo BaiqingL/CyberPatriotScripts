@@ -28,11 +28,12 @@ echo 7. Disable Weak services
 echo 8. System Integrity Scan
 echo 9. Powershell rootkit detection
 
-SET /p choice=Enter your choice: 
-IF %choice%==1
-GOTO ONE
+CHOICE /C 12345 /M "Enter your choice:"
 
-:ONE
+SET /p choice=Enter your choice: 
+IF choice 1 goto one
+
+:One
 REM Windows Defender scan 
 echo "SCANNING WITH DEFAULT WINDOWS DEFENDER!"
 cd C:\Program Files\Windows Defender\
