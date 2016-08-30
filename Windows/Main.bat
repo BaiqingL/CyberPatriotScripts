@@ -30,6 +30,7 @@ echo 9. Powershell rootkit detection
 
 
 CHOICE /C 123456789 /M "Enter your choice:"
+echo ""
 if ERRORLEVEL 9 goto Nine
 if ERRORLEVEL 8 goto Eight
 if ERRORLEVEL 7 goto Seven
