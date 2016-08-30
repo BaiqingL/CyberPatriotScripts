@@ -15,7 +15,24 @@ pause
 exit
 )
 
+:MENU
 
+echo Choose An option:
+echo 1. Windows Defender Scan
+echo 2. List Processes
+echo 3. Changing Password Policies
+echo 4. Enable UAC
+echo 5. Disable Remote Desktop
+echo 6. Enable Auto-Update
+echo 7. Disable Weak services
+echo 8. System Integrity Scan
+echo 9. Powershell rootkit detection
+
+SET /p choice=Enter your choice: 
+IF %choice%==1
+GOTO ONE
+
+:ONE
 REM Windows Defender scan 
 echo "SCANNING WITH DEFAULT WINDOWS DEFENDER!"
 cd C:\Program Files\Windows Defender\
