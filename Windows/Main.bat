@@ -27,9 +27,10 @@ echo 6. Enable Auto-Update
 echo 7. Disable Weak services
 echo 8. System Integrity Scan
 echo 9. Powershell rootkit detection
-
+echo 10. Check startup processes
 
 CHOICE /C 123456789 /M "Enter your choice:"
+if ERRORLEVEL 10 goto Ten
 if ERRORLEVEL 9 goto Nine
 if ERRORLEVEL 8 goto Eight
 if ERRORLEVEL 7 goto Seven
@@ -163,5 +164,10 @@ echo "POWERSHELL ROOTKIT DETECTION WITH MALWAREBYTES ROOTKIT BETA"
 powershell Invoke-WebRequest -OutFile MBRTKit.exe https://data-cdn.mbamupdates.com/web/mbar-1.09.3.1001.exe
 MBRTKit.exe
 goto MENU
+
+:Ten
+powershell Get-CimInstance Win32_StartupCommand | Select-Object Name, command, Location, User | Format-List
+pause
+goto MENU 
 
 PAUSE
