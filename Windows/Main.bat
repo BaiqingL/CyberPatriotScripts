@@ -29,7 +29,7 @@ echo 8. System Integrity Scan
 echo 9. Powershell rootkit detection
 
 
-SET /p choice=Enter your choice: 
+CHOICE /C 123456789 /M "Enter your choice:"
 IF ERRORLEVEL 1 GOTO One
 
 :One
