@@ -20,6 +20,7 @@ REM Windows Defender scan
 echo "SCANNING WITH DEFAULT WINDOWS DEFENDER!"
 cd C:\Program Files\Windows Defender\
 MpCmdRun.exe -Scan 2
+cd C:\
 
 
 REM Listing possible penetrations
