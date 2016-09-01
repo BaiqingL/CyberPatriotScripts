@@ -1,4 +1,4 @@
-strFolderName = "C:\scripts\sec_center"
+strFolderName = "C:\Destination\"
 Set objWMIService = GetObject("winmgmts:")
 Set objFolderSecuritySettings = _
 objWMIService.Get("Win32_LogicalFileSecuritySetting='" & strFolderName & "'")
