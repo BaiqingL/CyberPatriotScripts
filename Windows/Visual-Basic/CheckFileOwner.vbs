@@ -1,4 +1,4 @@
-strFileName = "C:\scripts\center\test.txt"
+strFileName = "C:\Destination\target.txt"
 Set objWMIService = GetObject("winmgmts:")
 Set objFileSecuritySettings = _
 objWMIService.Get("Win32_LogicalFileSecuritySetting='" & strFileName & "'")
