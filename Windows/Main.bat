@@ -74,6 +74,8 @@ net accounts /maxpwage:30
 REM Passwords can only be changed after 1 day has passed
 net accounts /minpwage:1
 REM Display current password policy
+echo "CURRENT POLICY"
+PAUSE
 net accounts
 goto MENU
 
