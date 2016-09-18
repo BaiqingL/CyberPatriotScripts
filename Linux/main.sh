@@ -98,6 +98,8 @@ cat /tmp/777s
 
 #Backup
 mkdir /iptables/
+touch /iptables/rules.v4.bak
+touch /iptables/rules.v6.bak
 iptables-save > /iptables/rules.v4.bak
 ip6tables-save > /iptables/rules.v6.bak
 
@@ -105,6 +107,7 @@ ip6tables-save > /iptables/rules.v6.bak
 apt-get remove -y ufw
 apt-get install -y iptables
 apt-get install -y ip6tables
+apt-get install -y iptables-persistent
 
 #Clear out and default iptables
 iptables -t nat -F
@@ -126,6 +129,37 @@ ip6tables -X
 ip6tables -P INPUT DROP
 ip6tables -P FORWARD DROP
 ip6tables -P OUTPUT DROP
+
+iptables -A INPUT -i lo -j ACCEPT
+
+#Least Strict Rules
+iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+
+#Strict Rules -- Only allow well known ports (1-1022)
+#iptables -A INPUT -p tcp --match multiport --sports 1:1022 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#iptables -A INPUT -p udp --match multiport --sports 1:1022 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p tcp --match multiport --dports 1:1022 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p udp --match multiport --dports 1:1022 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -o lo -j ACCEPT
+#iptables -P OUTPUT DROP
+
+#Very Strict Rules - Only allow HTTP/HTTPS and DNS
+#iptables -A INPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#iptables -A INPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#iptables -A INPUT -p tcp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#iptables -A INPUT -p udp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -o lo -j ACCEPT
+#iptables -P OUTPUT DROP
+
+mkdir /etc/iptables/
+touch /etc/iptables/rules.v4
+touch /etc/iptables/rules.v6
+iptables-save > /etc/iptables/rules.v4
+ip6tables-save > /etc/iptables/rules.v6
 
 #--------- Secure /etc/sysctl.conf ----------------
 sysctl -w net.ipv4.tcp_syncookies=1
