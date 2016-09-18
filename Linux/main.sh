@@ -51,7 +51,8 @@ lsof-i -n -P
 netstat -tulpn
 
 #--------- Update Using Apt-Get ----------------
-apt-get update --no-allow-insecure-repositories
+#apt-get update --no-allow-insecure-repositories
+apt-get update
 apt-get dist-upgrade -y
 apt-get install -f -y
 apt-get autoremove -y
@@ -101,7 +102,7 @@ iptables-save > /iptables/rules.v4.bak
 ip6tables-save > /iptables/rules.v6.bak
 
 #Uninstall UFW and install iptables
-apt-get purge -y ufw
+apt-get remove -y ufw
 apt-get install -y iptables
 apt-get install -y ip6tables
 
