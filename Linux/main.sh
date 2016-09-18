@@ -59,8 +59,12 @@ apt-get autoclean -y
 apt-get check
 
 #--------- Download programs ----------------
-apt-get install -y chkrootkit portsentry lynis ufw sysv-rc-conf nessus clamav rkhunter apparmor apparmor-profiles
+apt-get install -y chkrootkit portsentry ufw sysv-rc-conf nessus clamav rkhunter apparmor apparmor-profiles
 apt-get install -y --reinstall coreutils
+
+#This will download lynis 2.3.3, which may be out of date
+wget https://cisofy.com/files/lynis-2.3.3.tar.gz -O /lynis.tar.gz
+tar -xzf /lynis.tar.gz --directory /usr/share/
 
 #--------- Configure Automatic Updates ----------------
 cat /etc/apt/apt.conf.d/10periodic | grep APT::Periodic::Update-Package-Lists | grep 0 >> /dev/null
@@ -138,6 +142,7 @@ chkrootkit -q
 rkhunter --update
 rkhunter --propupd
 rkhunter -c
-lynis -c
+/usr/share/lynis/lynis update info
+/usr/share/lynis/lynis audit system
 freshclam
 clamscan -r -i --exclude-dir="^/sys" /
