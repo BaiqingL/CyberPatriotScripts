@@ -108,6 +108,7 @@ apt-get remove -y ufw
 apt-get install -y iptables
 apt-get install -y ip6tables
 apt-get install -y iptables-persistent
+apt-get install -y ipset
 
 #Clear out and default iptables
 iptables -t nat -F
