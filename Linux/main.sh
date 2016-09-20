@@ -22,12 +22,11 @@ fi
 
 #--------- Allow Only Root Cron ----------------
 cd /etc/
-cd /etc/
 /bin/rm -f cron.deny at.deny
 echo root >cron.allow
 echo root >at.allow
 /bin/chown root:root cron.allow at.allow
-/bin/chmod 400 cron.allow at.allow
+/bin/chmod 644 cron.allow at.allow
 
 #--------- Securing Apache ----------------
 chown -R root:root /etc/apache2
