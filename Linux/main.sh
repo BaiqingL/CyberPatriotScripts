@@ -2,6 +2,8 @@
 #MIT Licence 
 #Copyright (c) Ethan Perry, Andy Lyu
 unalias -a #Get rid of aliases
+echo "unalias -a" >> ~/.bashrc
+echo "unalias -a" >> /root/.bashrc
 
 #--------- Change Root Password ----------------
 passwd
