@@ -31,17 +31,21 @@ echo root >at.allow
 /bin/chmod 644 cron.allow at.allow
 
 #--------- Securing Apache ----------------
+a2enmod userdir
+
 chown -R root:root /etc/apache2
 chown -R root:root /etc/apache
 
 if [ -e /etc/apache2/apache2.conf ]; then
-	echo \<Directory \> >> /etc/apache2/apache2.conf
-	echo -e ' \t AllowOverride None' >> /etc/apache2/apache2.conf
-	echo -e ' \t Order Deny,Allow' >> /etc/apache2/apache2.conf
-	echo -e ' \t Deny from all' >> /etc/apache2/apache2.conf
-	echo \<Directory \/\> >> /etc/apache2/apache2.conf
-	echo UserDir disabled root >> /etc/apache2/apache2.conf
+	echo "<Directory />" >> /etc/apache2/apache2.conf
+	echo "        AllowOverride None" >> /etc/apache2/apache2.conf
+	echo "        Order Deny,Allow" >> /etc/apache2/apache2.conf
+	echo "        Deny from all" >> /etc/apache2/apache2.conf
+	echo "</Directory>" >> /etc/apache2/apache2.conf
+	echo "UserDir disabled root" >> /etc/apache2/apache2.conf
 fi
+
+systemctl restart apache2.service
 
 #--------- Manual File Inspection ----------------
 crontab -e #make sure crontab is empty
