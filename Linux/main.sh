@@ -8,7 +8,17 @@ passwd
 echo "Please change other user's passwords too"
 
 #--------- Check and Change UID's of 0 not Owned by Root ----------------
-cut -d: -f1,3 /etc/passwd | egrep ':0$' | cut -d: -f1 | grep -v root >> zerouidusers
+touch /zerouidusers
+
+cut -d: -f1,3 /etc/passwd | egrep ':0$' | cut -d: -f1 | grep -v root > /zerouidusers
+
+if [ -s /zerouidusers ]
+then
+     echo "There are Zero UID Users! Fix Now!"
+else
+     echo "No Zero UID Users"
+fi
+
 
 #--------- Allow Only Root Cron ----------------
 cd /etc/
