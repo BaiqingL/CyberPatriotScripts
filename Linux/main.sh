@@ -200,6 +200,13 @@ iptables -A INPUT -d 224.0.0.0/3 -j DROP
 
 iptables -A INPUT -i lo -j ACCEPT
 
+#Allowing ports for mail servers
+#iptables -A INPUT -p 25
+#iptables -A INPUT -p 2525
+#iptables -A INPUT -p 587
+#iptables -A INPUT -p 465
+#iptables -A INPUT -p 2526
+
 #Least Strict Rules
 iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 
