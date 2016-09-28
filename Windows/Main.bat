@@ -1,9 +1,6 @@
 REM Add other things if could be automated, RUN THIS AS ADMIN
-
 REM Everything is added, including PowerShell command execution and "wget" lol
-
 REM Admin checking...
-
 @echo off
 echo Checking if script contains Administrative rights...
 net sessions
@@ -14,9 +11,7 @@ echo No admin, please run with Administrative rights...
 pause
 exit
 )
-
 :MENU
-
 echo Choose An option:
 echo 1. Windows Defender Scan
 echo 2. List Processes
@@ -40,7 +35,6 @@ if ERRORLEVEL 4 goto Four
 if ERRORLEVEL 3 goto Three
 if ERRORLEVEL 2 goto Two
 if ERRORLEVEL 1 goto One
-
 :One
 REM Windows Defender scan 
 echo "SCANNING WITH DEFAULT WINDOWS DEFENDER!"
@@ -48,7 +42,6 @@ cd C:\Program Files\Windows Defender\
 MpCmdRun.exe -Scan 2
 cd C:\
 goto MENU
-
 :Two
 REM Listing possible penetrations
 cd C:\
@@ -64,7 +57,6 @@ if %errorlevel%==1 echo Started processes failed to write
 reg export HKLM\Software\Microsoft\Windows\CurrentVersion\Run  Run.reg
 if %errorlevel%==1 echo Run processes failed to write
 goto MENU
-
 :Three
 echo "OUTPUT DONE, CHANGING PASSWORD POLICIES!"
 REM Passwords must be 10 digits
@@ -78,26 +70,22 @@ echo "CURRENT POLICY"
 PAUSE
 net accounts
 goto MENU
-
 :Four
 REM Turn on UAC
 echo "TURNING ON UAC"
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System /v EnableLUA /t REG_DWORD /d 1 /f
 goto MENU
-
 :Five
 REM No Remote Desktop
 echo "DISABLING REMOTE DESKTOP"
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 1 /f
 reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" /v UserAuthentication /t REG_DWORD /d 0 /f
 goto MENU
-
 :Six
 REM Windows auomatic updates
 echo "ENABLING AUTO-UPDATES"
 reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update" /v AUOptions /t REG_DWORD /d 3 /f
 goto MENU
-
 :Seven
 REM Removing good ol' insecure stuff
 echo "DISABLING WEAK SERVICES"
@@ -153,23 +141,19 @@ dism /online /disable-feature /featurename:TFTP >NUL
 dism /online /disable-feature /featurename:TelnetClient >NUL
 dism /online /disable-feature /featurename:TelnetServer >NUL
 goto MENU
-
 :Eight
 REM START SYS INTEG SCAN!
 echo "STARTING SYSTEM INTERGRITY SCAN"
 Sfc.exe /scannow
 goto MENU
-
 :Nine
 REM PowerShell RootKit detection start
 echo "POWERSHELL ROOTKIT DETECTION WITH MALWAREBYTES ROOTKIT BETA"
 powershell Invoke-WebRequest -OutFile MBRTKit.exe https://data-cdn.mbamupdates.com/web/mbar-1.09.3.1001.exe
 MBRTKit.exe
 goto MENU
-
 :Ten
 powershell Get-CimInstance Win32_StartupCommand | Select-Object Name, command, Location, User | Format-List
 pause
 goto MENU 
-
 PAUSE
