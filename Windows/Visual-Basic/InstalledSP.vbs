@@ -1,6 +1,3 @@
-' List the Latest Installed Service Pack
-
-
 strComputer = "."
 Set objWMIService = GetObject("winmgmts:" _
 & "{impersonationLevel=impersonate}!\\" & strComputer & "\root\cimv2")
