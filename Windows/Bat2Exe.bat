@@ -2,9 +2,9 @@
 SETLOCAL
 SET PathTo7Zip=
 SET OutputFile="%~n1.exe"
-SET SourceFiles="%TEMP%MakeEXE_files.txt"
-SET Config="%TEMP%MakeEXE_config.txt"
-SET Source7ZFile="%Temp%MakeEXE.7z"
+SET SourceFiles="%TEMP%EXE_files.txt"
+SET Config="%TEMP%EXE_config.txt"
+SET Source7ZFile="%Temp%EXE.7z"
 IF EXIST %OutputFile% DEL %OutputFile%
 ECHO "%~dpnx1" > %SourceFiles%
 :AddInclude
