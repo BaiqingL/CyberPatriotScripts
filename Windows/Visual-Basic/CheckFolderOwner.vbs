@@ -1,4 +1,4 @@
-strFolderName = "C:\Destination\"
+strFolderName = "C:\Destination\Target%"
 Set objWMIService = GetObject("winmgmts:")
 Set objFolderSecuritySettings = _
 objWMIService.Get("Win32_LogicalFileSecuritySetting='" & strFolderName & "'")
