@@ -62,7 +62,7 @@ nano listofusers #No unauthorized users
 nano zerouidusers #There should be no one in this. If there is, change the uid of the user
 
 #--------- Manual Network Inspection ----------------
-lsof-i -n -P
+lsof -i -n -P
 netstat -tulpn
 
 #--------- Update Using Apt-Get ----------------
