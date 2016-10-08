@@ -251,8 +251,10 @@ sysctl -p
 chkrootkit -q
 rkhunter --update
 rkhunter --propupd
-rkhunter -c
+rkhunter -c --enable all --disable none
 /usr/share/lynis/lynis update info
 /usr/share/lynis/lynis audit system
-freshclam
-clamscan -r -i --exclude-dir="^/sys" /
+systemctl stop clamav-freshclam
+freshclam --stdout
+systemctl start clamav-freshclam
+clamscan -r -i -stdout --exclude-dir="^/sys" /
