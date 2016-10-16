@@ -51,7 +51,7 @@ start()
 }
 
 cont(){
-	echo 'I have finished this task. Continue to next Task? (Y/N)'
+	printf "\033[1;31mI have finished this task. Continue to next Task? (Y/N)\033[0m\n"
 	read contyn
 	if [ "$contyn" = "N" ] || [ "$contyn" = "n" ]; then
 		exit
@@ -60,7 +60,7 @@ cont(){
 }
 
 Passwd(){
-	echo "Change Root's Password: "
+	printf "\033[1;31mChange Root's Password:\033[0m\n"
 	#--------- Change Root Password ----------------
 	passwd
 	echo "Please change other user's passwords too"
@@ -68,7 +68,7 @@ Passwd(){
 }
 
 zeroUid(){
-	echo "Checking for 0 UID users... "
+	printf "\033[1;31mChecking for 0 UID users...\033[0m\n"
 	#--------- Check and Change UID's of 0 not Owned by Root ----------------
 	touch /zerouidusers
 	touch /uidusers
@@ -117,7 +117,8 @@ zeroUid(){
 }
 
 rootCron(){
-	echo "Changing cron to only allow root access... "
+	printf "\033[1;31mChanging cron to only allow root access...\033[0m\n"
+	
 	#--------- Allow Only Root Cron ----------------
 	#reset crontab
 	crontab -r
@@ -131,7 +132,7 @@ rootCron(){
 }
 
 apacheSec(){
-	echo "Securing Apache... "
+	printf "\033[1;31mSecuring Apache...\033[0m\n"
 	#--------- Securing Apache ----------------
 	a2enmod userdir
 
@@ -152,7 +153,7 @@ apacheSec(){
 }
 
 fileSec(){
-	echo "Some file inspection... " 
+	printf "\033[1;31mSome file inspection...\033[0m\n"
 	#--------- Manual File Inspection ----------------
 	cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 > /tmp/listofusers
 	echo root >> /tmp/listofusers
@@ -181,8 +182,8 @@ fileSec(){
 	cont
 }
 
-netSec(){
-	echo "Some manual network inspection... " 
+netSec(){ 
+	printf "\033[1;31mSome manual network inspection...\033[0m\n"
 	#--------- Manual Network Inspection ----------------
 	lsof -i -n -P
 	netstat -tulpn
@@ -190,7 +191,7 @@ netSec(){
 }
 
 aptUp(){
-	echo "Updating computer... "
+	printf "\033[1;31mUpdating computer...\033[0m\n"
 	#--------- Update Using Apt-Get ----------------
 	#apt-get update --no-allow-insecure-repositories
 	apt-get update
@@ -203,7 +204,7 @@ aptUp(){
 }
 
 aptInst(){
-	echo "Installing programs... "
+	printf "\033[1;31mInstalling programs...\033[0m\n"
 	#--------- Download programs ----------------
 	apt-get install -y chkrootkit clamav rkhunter apparmor apparmor-profiles
 
@@ -214,7 +215,7 @@ aptInst(){
 }
 
 deleteFile(){
-	echo "Deleting dangerous files... "
+	printf "\033[1;31mDeleting dangerous files...\033[0m\n"
 	#--------- Delete Dangerous Files ----------------
 	find / -name '*.mp3' -type f -delete
 	find / -name '*.mov' -type f -delete
@@ -239,7 +240,7 @@ deleteFile(){
 }
 
 firewall(){
-	echo "Setting up firewall... "
+	printf "\033[1;31mSetting up firewall...\033[0m\n"
 	#--------- Setup Firewall ----------------
 	#Please verify that the firewall wont block any services, such as an Email server, when defaulted.
 	#I will back up iptables for you in and put it in /iptables/rules.v4.bak and /iptables/rules.v6.bak
@@ -363,7 +364,7 @@ firewall(){
 }
 
 sysCtl(){
-	echo "Making Sysctl Secure... "
+	printf "\033[1;31mMaking Sysctl Secure...\033[0m\n"
 	#--------- Secure /etc/sysctl.conf ----------------
 	sysctl -w net.ipv4.tcp_syncookies=1
 	sysctl -w net.ipv4.ip_forward=0
@@ -378,7 +379,7 @@ sysCtl(){
 }
 
 scan(){
-	echo "Scanning for Viruses... "
+	printf "\033[1;31mScanning for Viruses...\033[0m\n"
 	#--------- Scan For Vulnerabilities and viruses ----------------
 
 	#chkrootkit
