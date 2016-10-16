@@ -60,7 +60,7 @@ cont(){
 }
 
 Passwd(){
-	printf "\033[1;31mChange Root's Password:\033[0m\n"
+	printf "\033[1;31mChanging Root's Password..\033[0m\n"
 	#--------- Change Root Password ----------------
 	passwd
 	echo "Please change other user's passwords too"
