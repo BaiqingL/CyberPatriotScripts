@@ -59,7 +59,6 @@ nano /etc/lightdm/lightdm.conf #allow_guest=false, remove autologin
 nano /etc/ssh/sshd_config #PermitRootLogin no, Protocol 2, X11Forwarding no, PermitEmptyPasswards no
 nano /etc/sudoers #make sure sudoers file is clean. There should be no NOPASSWD
 nano listofusers #No unauthorized users
-nano zerouidusers #There should be no one in this. If there is, change the uid of the user
 
 #--------- Manual Network Inspection ----------------
 lsof -i -n -P
@@ -75,20 +74,19 @@ apt-get autoclean -y
 apt-get check
 
 #--------- Download programs ----------------
-apt-get install -y chkrootkit portsentry ufw sysv-rc-conf nessus clamav rkhunter apparmor apparmor-profiles
-apt-get install -y --reinstall coreutils
+apt-get install -y chkrootkit clamav rkhunter apparmor apparmor-profiles
 
 #This will download lynis 2.3.3, which may be out of date
 wget https://cisofy.com/files/lynis-2.3.3.tar.gz -O /lynis.tar.gz
 tar -xzf /lynis.tar.gz --directory /usr/share/
 
 #--------- Configure Automatic Updates ----------------
-cat /etc/apt/apt.conf.d/10periodic | grep APT::Periodic::Update-Package-Lists | grep 0 >> /dev/null
-if [ $?==0 ]; then
-	sed -i 's/APT::Periodic::Update-Package-Lists "0"/APT::Periodic::Update-Package-Lists "1"/g' /etc/apt/apt.conf.d/10periodic
-fi
+#cat /etc/apt/apt.conf.d/10periodic | grep APT::Periodic::Update-Package-Lists | grep 0 >> /dev/null
+#if [ $?==0 ]; then
+#	sed -i 's/APT::Periodic::Update-Package-Lists "0"/APT::Periodic::Update-Package-Lists "1"/g' /etc/apt/apt.conf.d/10periodic
+#fi
 
-#--------- Delete em' pirates, eh? (Delete Dangerous Files) ----------------
+#--------- Delete Dangerous Files ----------------
 find / -name '*.mp3' -type f -delete
 find / -name '*.mov' -type f -delete
 find / -name '*.mp4' -type f -delete
@@ -111,19 +109,19 @@ cat /tmp/777s
 #Please verify that the firewall wont block any services, such as an Email server, when defaulted.
 #I will back up iptables for you in and put it in /iptables/rules.v4.bak and /iptables/rules.v6.bak
 
-#Backup
-mkdir /iptables/
-touch /iptables/rules.v4.bak
-touch /iptables/rules.v6.bak
-iptables-save > /iptables/rules.v4.bak
-ip6tables-save > /iptables/rules.v6.bak
-
 #Uninstall UFW and install iptables
 apt-get remove -y ufw
 apt-get install -y iptables
 apt-get install -y ip6tables
 apt-get install -y iptables-persistent
 apt-get install -y ipset
+
+#Backup
+mkdir /iptables/
+touch /iptables/rules.v4.bak
+touch /iptables/rules.v6.bak
+iptables-save > /iptables/rules.v4.bak
+ip6tables-save > /iptables/rules.v6.bak
 
 #Clear out and default iptables
 iptables -t nat -F
@@ -200,15 +198,8 @@ iptables -A INPUT -d 224.0.0.0/3 -j DROP
 
 iptables -A INPUT -i lo -j ACCEPT
 
-#Allowing ports for mail servers
-#iptables -A INPUT -p 25
-#iptables -A INPUT -p 2525
-#iptables -A INPUT -p 587
-#iptables -A INPUT -p 465
-#iptables -A INPUT -p 2526
-
 #Least Strict Rules
-iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+#iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 
 #Strict Rules -- Only allow well known ports (1-1022)
 #iptables -A INPUT -p tcp --match multiport --sports 1:1022 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -218,17 +209,17 @@ iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
 #iptables -A OUTPUT -o lo -j ACCEPT
 #iptables -P OUTPUT DROP
 
-#Very Strict Rules - Only allow HTTP/HTTPS and DNS
-#iptables -A INPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#iptables -A INPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#iptables -A INPUT -p tcp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#iptables -A INPUT -p udp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
-#iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-#iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-#iptables -A OUTPUT -p tcp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-#iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
-#iptables -A OUTPUT -o lo -j ACCEPT
-#iptables -P OUTPUT DROP
+#Very Strict Rules - Only allow HTTP/HTTPS, NTP and DNS
+iptables -A INPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A INPUT -p tcp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A INPUT -p udp --sport 53 -m conntrack --ctstate ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 80 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 443 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p tcp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o lo -j ACCEPT
+iptables -P OUTPUT DROP
 
 mkdir /etc/iptables/
 touch /etc/iptables/rules.v4
@@ -252,6 +243,7 @@ chkrootkit -q
 rkhunter --update
 rkhunter --propupd
 rkhunter -c --enable all --disable none
+cd /usr/share/lynis/
 /usr/share/lynis/lynis update info
 /usr/share/lynis/lynis audit system
 systemctl stop clamav-freshclam
