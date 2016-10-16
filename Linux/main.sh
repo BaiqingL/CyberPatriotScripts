@@ -163,7 +163,6 @@ fileSec(){
 
 	#Replace lightdm.conf with safe reference file
 	cat $PWD/referenceFiles/lightdm.conf > /etc/lightdm/lightdm.conf
-	systemctl restart lightdm.service
 
 	#Replace sshd_config with safe reference file
 	cat $PWD/referenceFiles/sshd_config > /etc/ssh/sshd_config
