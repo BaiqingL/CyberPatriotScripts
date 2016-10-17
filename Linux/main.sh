@@ -4,9 +4,9 @@
 unalias -a #Get rid of aliases
 echo "unalias -a" >> ~/.bashrc
 echo "unalias -a" >> /root/.bashrc
-PWD=$(pwd)
+PWDthi=$(pwd)
 
-if [ ! -d $PWD/referenceFiles ]; then
+if [ ! -d $PWDthi/referenceFiles ]; then
 	echo "Please Cd into this script's directory"
 	exit
 fi
@@ -17,49 +17,49 @@ if [ "$EUID" -ne 0 ] ;
 fi
 
 #List of Functions:
-#Passwd
-#zeroUid
-#rootCron
-#apacheSec
-#fileSec
-#netSec
-#aptUp
-#aptInst
-#autoUp
-#deleteFile
-#firewall
-#sysCtl
-#scan
+#PasswdFun
+#zeroUidFun
+#rootCronFun
+#apacheSecFun
+#fileSecFun
+#netSecFun
+#aptUpFun
+#aptInstFun
+#deleteFileFun
+#firewallFun
+#sysCtlFun
+#scanFun
 
-start()
+startFun()
 {
 	clear
 
-	Passwd
-	zeroUid
-	rootCron
-	apacheSec
-	fileSec
-	netSec
-	aptInst
-	autoUp
-	deleteFile
-	firewall
-	sysCtl
-	scan
-
+	PasswdFun
+	zeroUidFun
+	rootCronFun
+	apacheSecFun
+	fileSecFun
+	netSecFun
+	aptUpFun
+	aptInstFun
+	deleteFileFun
+	firewallFun
+	sysCtlFun
+	scanFun
+	printf "\033[1;31mDone!\033[0m\n"
 }
 
 cont(){
 	printf "\033[1;31mI have finished this task. Continue to next Task? (Y/N)\033[0m\n"
 	read contyn
 	if [ "$contyn" = "N" ] || [ "$contyn" = "n" ]; then
+		printf "\033[1;31mAborted\033[0m\n"
 		exit
 	fi
 	clear
 }
 
-Passwd(){
+PasswdFun(){
 	printf "\033[1;31mChanging Root's Password..\033[0m\n"
 	#--------- Change Root Password ----------------
 	passwd
@@ -67,7 +67,7 @@ Passwd(){
 	cont
 }
 
-zeroUid(){
+zeroUidFun(){
 	printf "\033[1;31mChecking for 0 UID users...\033[0m\n"
 	#--------- Check and Change UID's of 0 not Owned by Root ----------------
 	touch /zerouidusers
@@ -116,7 +116,7 @@ zeroUid(){
 	cont
 }
 
-rootCron(){
+rootCronFun(){
 	printf "\033[1;31mChanging cron to only allow root access...\033[0m\n"
 	
 	#--------- Allow Only Root Cron ----------------
@@ -131,7 +131,7 @@ rootCron(){
 	cont
 }
 
-apacheSec(){
+apacheSecFun(){
 	printf "\033[1;31mSecuring Apache...\033[0m\n"
 	#--------- Securing Apache ----------------
 	a2enmod userdir
@@ -152,26 +152,35 @@ apacheSec(){
 	cont
 }
 
-fileSec(){
-	printf "\033[1;31mSome file inspection...\033[0m\n"
+fileSecFun(){
+	printf "\033[1;31mSome automatic file inspection...\033[0m\n"
 	#--------- Manual File Inspection ----------------
 	cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 > /tmp/listofusers
 	echo root >> /tmp/listofusers
 	
 	#Replace sources.list with safe reference file (For Ubuntu 14 Only)
-	cat $PWD/referenceFiles/sources.list > /etc/apt/sources.list
+	cat $PWDthi/referenceFiles/sources.list > /etc/apt/sources.list
 	apt-get update
 
 	#Replace lightdm.conf with safe reference file
-	cat $PWD/referenceFiles/lightdm.conf > /etc/lightdm/lightdm.conf
+	cat $PWDthi/referenceFiles/lightdm.conf > /etc/lightdm/lightdm.conf
 
 	#Replace sshd_config with safe reference file
-	cat $PWD/referenceFiles/sshd_config > /etc/ssh/sshd_config
+	cat $PWDthi/referenceFiles/sshd_config > /etc/ssh/sshd_config
 	/usr/sbin/sshd -t
 	systemctl restart sshd.service
 
 	#/etc/rc.local should be empty except for 'exit 0'
 	echo 'exit 0' > /etc/rc.local
+
+	printf "\033[1;31mFinished automatic file inspection. Continue to manual file inspection? (Y/N)\033[0m\n"
+	read contyn
+	if [ "$contyn" = "N" ] || [ "$contyn" = "n" ]; then
+		exit
+	fi
+	clear
+
+	printf "\033[1;31mSome manual file inspection...\033[0m\n"
 
 	#Manual File Inspection
 	nano /etc/resolv.conf #make sure if safe, use 8.8.8.8 for name server
@@ -182,7 +191,7 @@ fileSec(){
 	cont
 }
 
-netSec(){ 
+netSecFun(){ 
 	printf "\033[1;31mSome manual network inspection...\033[0m\n"
 	#--------- Manual Network Inspection ----------------
 	lsof -i -n -P
@@ -190,7 +199,7 @@ netSec(){
 	cont
 }
 
-aptUp(){
+aptUpFun(){
 	printf "\033[1;31mUpdating computer...\033[0m\n"
 	#--------- Update Using Apt-Get ----------------
 	#apt-get update --no-allow-insecure-repositories
@@ -203,7 +212,7 @@ aptUp(){
 	cont
 }
 
-aptInst(){
+aptInstFun(){
 	printf "\033[1;31mInstalling programs...\033[0m\n"
 	#--------- Download programs ----------------
 	apt-get install -y chkrootkit clamav rkhunter apparmor apparmor-profiles
@@ -214,7 +223,7 @@ aptInst(){
 	cont
 }
 
-deleteFile(){
+deleteFileFun(){
 	printf "\033[1;31mDeleting dangerous files...\033[0m\n"
 	#--------- Delete Dangerous Files ----------------
 	find / -name '*.mp3' -type f -delete
@@ -234,12 +243,13 @@ deleteFile(){
 	cd / && ls -laR 2> /dev/null | grep rwxrwxrwx | grep -v "lrwx" &> /tmp/777s
 	cont
 
-	echo "777 Files: "
+	printf "\033[1;31m777 (Full Permission) Files : \033[0m\n"
+	printf "\033[1;31mConsider changing the permissions of these files\033[0m\n"
 	cat /tmp/777s
 	cont
 }
 
-firewall(){
+firewallFun(){
 	printf "\033[1;31mSetting up firewall...\033[0m\n"
 	#--------- Setup Firewall ----------------
 	#Please verify that the firewall wont block any services, such as an Email server, when defaulted.
@@ -363,7 +373,7 @@ firewall(){
 	cont
 }
 
-sysCtl(){
+sysCtlFun(){
 	printf "\033[1;31mMaking Sysctl Secure...\033[0m\n"
 	#--------- Secure /etc/sysctl.conf ----------------
 	sysctl -w net.ipv4.tcp_syncookies=1
@@ -378,36 +388,36 @@ sysCtl(){
 	cont
 }
 
-scan(){
+scanFun(){
 	printf "\033[1;31mScanning for Viruses...\033[0m\n"
 	#--------- Scan For Vulnerabilities and viruses ----------------
 
 	#chkrootkit
-	echo "Starting CHKROOTKIT scan..."
+	printf "\033[1;31mStarting CHKROOTKIT scan...\033[0m\n"
 	chkrootkit -q
 	cont
 
 	#Rkhunter
-	echo "Starting RKHUNTER scan..."
+	printf "\033[1;31mStarting RKHUNTER scan...\033[0m\n"
 	rkhunter --update
 	rkhunter --propupd #Run this once at install
 	rkhunter -c --enable all --disable none
 	cont
 	
 	#Lynis
-	echo "Starting LYNIS scan..."
+	printf "\033[1;31mStarting LYNIS scan...\033[0m\n"
 	cd /usr/share/lynis/
 	/usr/share/lynis/lynis update info
 	/usr/share/lynis/lynis audit system
 	cont
 	
 	#ClamAV
-	echo "Starting CLAMAV scan..."
+	printf "\033[1;31mStarting CLAMAV scan...\033[0m\n"
 	systemctl stop clamav-freshclam
 	freshclam --stdout
 	systemctl start clamav-freshclam
-	clamscan -r -i -stdout --exclude-dir="^/sys" /
+	clamscan -r -i --stdout --exclude-dir="^/sys" /
 	cont
 }
 
-start
+startFun
