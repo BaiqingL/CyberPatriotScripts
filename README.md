@@ -18,7 +18,7 @@ Clears out all of the insecure processes, and checks for viruses and Rookits via
 Disables insecure information and processes.
 Displays startup programs for analysis.
 Displays file and folder owners for analysis.
-Deltes pirated files and displays for analysis.
+Deletes pirated files and displays for analysis.
 
 # Linux
 Adds many manual IPTABLES rules.
