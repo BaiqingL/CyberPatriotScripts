@@ -1,6 +1,5 @@
 #!/bin/bash
 #MIT Licence 
-#Test
 #Copyright (c) Ethan Perry, Andy Lyu
 echo "hi"
 unalias -a #Get rid of aliases
