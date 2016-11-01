@@ -2,6 +2,7 @@
 #MIT Licence 
 #Test
 #Copyright (c) Ethan Perry, Andy Lyu
+echo "hi"
 unalias -a #Get rid of aliases
 echo "unalias -a" >> ~/.bashrc
 echo "unalias -a" >> /root/.bashrc
