@@ -218,8 +218,8 @@ aptInstFun(){
 	#--------- Download programs ----------------
 	apt-get install -y chkrootkit clamav rkhunter apparmor apparmor-profiles
 
-	#This will download lynis 2.3.4, which may be out of date
-	wget https://cisofy.com/files/lynis-2.3.4.tar.gz -O /lynis.tar.gz
+	#This will download lynis 2.4.0, which may be out of date
+	wget https://cisofy.com/files/lynis-2.4.0.tar.gz -O /lynis.tar.gz
 	tar -xzf /lynis.tar.gz --directory /usr/share/
 	cont
 }
