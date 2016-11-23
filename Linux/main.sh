@@ -5,17 +5,14 @@ unalias -a #Get rid of aliases
 echo "unalias -a" >> ~/.bashrc
 echo "unalias -a" >> /root/.bashrc
 PWDthi=$(pwd)
-
 if [ ! -d $PWDthi/referenceFiles ]; then
 	echo "Please Cd into this script's directory"
 	exit
 fi
-
 if [ "$EUID" -ne 0 ] ;
 	then echo "Run as Root"
 	exit
 fi
-
 #List of Functions:
 #PasswdFun
 #zeroUidFun
@@ -29,7 +26,6 @@ fi
 #firewallFun
 #sysCtlFun
 #scanFun
-
 startFun()
 {
 	clear
@@ -48,7 +44,6 @@ startFun()
 	scanFun
 	printf "\033[1;31mDone!\033[0m\n"
 }
-
 cont(){
 	printf "\033[1;31mI have finished this task. Continue to next Task? (Y/N)\033[0m\n"
 	read contyn
@@ -58,7 +53,6 @@ cont(){
 	fi
 	clear
 }
-
 PasswdFun(){
 	printf "\033[1;31mChanging Root's Password..\033[0m\n"
 	#--------- Change Root Password ----------------
@@ -66,7 +60,6 @@ PasswdFun(){
 	echo "Please change other user's passwords too"
 	cont
 }
-
 zeroUidFun(){
 	printf "\033[1;31mChecking for 0 UID users...\033[0m\n"
 	#--------- Check and Change UID's of 0 not Owned by Root ----------------
@@ -115,7 +108,6 @@ zeroUidFun(){
 	fi
 	cont
 }
-
 rootCronFun(){
 	printf "\033[1;31mChanging cron to only allow root access...\033[0m\n"
 	
@@ -130,7 +122,6 @@ rootCronFun(){
 	/bin/chmod 644 cron.allow at.allow
 	cont
 }
-
 apacheSecFun(){
 	printf "\033[1;31mSecuring Apache...\033[0m\n"
 	#--------- Securing Apache ----------------
@@ -151,7 +142,6 @@ apacheSecFun(){
 	systemctl restart apache2.service
 	cont
 }
-
 fileSecFun(){
 	printf "\033[1;31mSome automatic file inspection...\033[0m\n"
 	#--------- Manual File Inspection ----------------
@@ -190,7 +180,6 @@ fileSecFun(){
 
 	cont
 }
-
 netSecFun(){ 
 	printf "\033[1;31mSome manual network inspection...\033[0m\n"
 	#--------- Manual Network Inspection ----------------
@@ -198,7 +187,6 @@ netSecFun(){
 	netstat -tulpn
 	cont
 }
-
 aptUpFun(){
 	printf "\033[1;31mUpdating computer...\033[0m\n"
 	#--------- Update Using Apt-Get ----------------
@@ -211,7 +199,6 @@ aptUpFun(){
 	apt-get check
 	cont
 }
-
 aptInstFun(){
 	printf "\033[1;31mInstalling programs...\033[0m\n"
 	#--------- Download programs ----------------
@@ -222,7 +209,6 @@ aptInstFun(){
 	tar -xzf /lynis.tar.gz --directory /usr/share/
 	cont
 }
-
 deleteFileFun(){
 	printf "\033[1;31mDeleting dangerous files...\033[0m\n"
 	#--------- Delete Dangerous Files ----------------
@@ -248,25 +234,21 @@ deleteFileFun(){
 	cat /tmp/777s
 	cont
 }
-
 firewallFun(){
 	printf "\033[1;31mSetting up firewall...\033[0m\n"
 	#--------- Setup Firewall ----------------
 	#Please verify that the firewall wont block any services, such as an Email server, when defaulted.
 	#I will back up iptables for you in and put it in /iptables/rules.v4.bak and /iptables/rules.v6.bak
-
 	#Uninstall UFW and install iptables
 	apt-get remove -y ufw
 	apt-get install -y iptables
 	apt-get install -y iptables-persistent
-
 	#Backup
 	mkdir /iptables/
 	touch /iptables/rules.v4.bak
 	touch /iptables/rules.v6.bak
 	iptables-save > /iptables/rules.v4.bak
 	ip6tables-save > /iptables/rules.v6.bak
-
 	#Clear out and default iptables
 	iptables -t nat -F
 	iptables -t mangle -F
@@ -277,7 +259,6 @@ firewallFun(){
 	iptables -P INPUT DROP
 	iptables -P FORWARD DROP
 	iptables -P OUTPUT ACCEPT
-
 	ip6tables -t nat -F
 	ip6tables -t mangle -F
 	ip6tables -t nat -X
@@ -287,11 +268,9 @@ firewallFun(){
 	ip6tables -P INPUT DROP
 	ip6tables -P FORWARD DROP
 	ip6tables -P OUTPUT DROP
-
 	#Block Bogons
 	printf "\033[1;31mEnter primary internet interface: \033[0m\n"
 	read interface
-
 	#Blocks bogons going into the computer
 	iptables -A INPUT -s 127.0.0.0/8 -i $interface -j DROP
 	iptables -A INPUT -s 0.0.0.0/8 -j DROP
@@ -303,7 +282,6 @@ firewallFun(){
 	iptables -A INPUT -s 198.51.100.0/24 -j DROP
 	iptables -A INPUT -s 203.0.113.0/24 -j DROP
 	iptables -A INPUT -s 224.0.0.0/3 -j DROP
-
 	#Blocks bogons from leaving the computer
 	iptables -A OUTPUT -d 127.0.0.0/8 -o $interface -j DROP
 	iptables -A OUTPUT -d 0.0.0.0/8 -j DROP
@@ -315,7 +293,6 @@ firewallFun(){
 	iptables -A OUTPUT -d 198.51.100.0/24 -j DROP
 	iptables -A OUTPUT -d 203.0.113.0/24 -j DROP
 	iptables -A OUTPUT -d 224.0.0.0/3 -j DROP
-
 	#Blocks outbound from source bogons - A bit overkill
 	iptables -A OUTPUT -s 127.0.0.0/8 -o $interface -j DROP
 	iptables -A OUTPUT -s 0.0.0.0/8 -j DROP
@@ -327,7 +304,6 @@ firewallFun(){
 	iptables -A OUTPUT -s 198.51.100.0/24 -j DROP
 	iptables -A OUTPUT -s 203.0.113.0/24 -j DROP
 	iptables -A OUTPUT -s 224.0.0.0/3 -j DROP
-
 	#Block receiving bogons intended for bogons - Super overkill
 	iptables -A INPUT -d 127.0.0.0/8 -i $interface -j DROP
 	iptables -A INPUT -d 0.0.0.0/8 -j DROP
@@ -339,12 +315,9 @@ firewallFun(){
 	iptables -A INPUT -d 198.51.100.0/24 -j DROP
 	iptables -A INPUT -d 203.0.113.0/24 -j DROP
 	iptables -A INPUT -d 224.0.0.0/3 -j DROP
-
 	iptables -A INPUT -i lo -j ACCEPT
-
 	#Least Strict Rules
 	#iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-
 	#Strict Rules -- Only allow well known ports (1-1022)
 	#iptables -A INPUT -p tcp --match multiport --sports 1:1022 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 	#iptables -A INPUT -p udp --match multiport --sports 1:1022 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -352,7 +325,6 @@ firewallFun(){
 	#iptables -A OUTPUT -p udp --match multiport --dports 1:1022 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 	#iptables -A OUTPUT -o lo -j ACCEPT
 	#iptables -P OUTPUT DROP
-
 	#Very Strict Rules - Only allow HTTP/HTTPS, NTP and DNS
 	iptables -A INPUT -p tcp --sport 80 -m conntrack --ctstate ESTABLISHED -j ACCEPT
 	iptables -A INPUT -p tcp --sport 443 -m conntrack --ctstate ESTABLISHED -j ACCEPT
@@ -364,7 +336,6 @@ firewallFun(){
 	iptables -A OUTPUT -p udp --dport 53 -m conntrack --ctstate NEW,ESTABLISHED -j ACCEPT
 	iptables -A OUTPUT -o lo -j ACCEPT
 	iptables -P OUTPUT DROP
-
 	mkdir /etc/iptables/
 	touch /etc/iptables/rules.v4
 	touch /etc/iptables/rules.v6
@@ -372,7 +343,6 @@ firewallFun(){
 	ip6tables-save > /etc/iptables/rules.v6
 	cont
 }
-
 sysCtlFun(){
 	printf "\033[1;31mMaking Sysctl Secure...\033[0m\n"
 	#--------- Secure /etc/sysctl.conf ----------------
@@ -387,7 +357,6 @@ sysCtlFun(){
 	sysctl -p
 	cont
 }
-
 scanFun(){
 	printf "\033[1;31mScanning for Viruses...\033[0m\n"
 	#--------- Scan For Vulnerabilities and viruses ----------------
@@ -419,5 +388,4 @@ scanFun(){
 	clamscan -r -i --stdout --exclude-dir="^/sys" /
 	cont
 }
-
 startFun
