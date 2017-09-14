@@ -2,7 +2,7 @@
 
 https://www.uscyberpatriot.org/competition/training-materials/practice-images (Practice images) CURRENTLY DOWN
 
-# Cyber Patriot Wellesley Team's automated script on securing the competition. For Cyber Patriot 2016-2017
+# Cyber Patriot Wellesley Team's automated script on securing the competition. For Cyber Patriot 2016-2018
 
 Only authorized for Wellesley team's usuage for 2016 - 2018, you may use this after the competition.
 
