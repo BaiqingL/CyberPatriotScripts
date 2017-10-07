@@ -205,7 +205,7 @@ aptInstFun(){
 	apt-get install -y chkrootkit clamav rkhunter apparmor apparmor-profiles
 
 	#This will download lynis 2.4.0, which may be out of date
-	wget https://cisofy.com/files/lynis-2.4.0.tar.gz -O /lynis.tar.gz
+	wget https://cisofy.com/files/lynis-2.5.5.tar.gz -O /lynis.tar.gz
 	tar -xzf /lynis.tar.gz --directory /usr/share/
 	cont
 }
@@ -388,4 +388,13 @@ scanFun(){
 	clamscan -r -i --stdout --exclude-dir="^/sys" /
 	cont
 }
+
+repoFun(){
+	read -p "Please check the repo for any issues [Press any key to continue...]" -n1 -s
+	nano /etc/apt/sources.list
+	gpg /etc/apt/trusted.gpg > /tmp/trustedGPG
+	printf "\033[1;31mPlease check /tmp/trustedGPG for trusted GPG keys\033[0m\n"
+	cont
+}
+
 startFun
