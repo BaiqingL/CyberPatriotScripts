@@ -1,6 +1,3 @@
-REM Add other things if could be automated, RUN THIS AS ADMIN
-REM Everything is added, including PowerShell command execution and "wget" lol
-REM Admin checking...
 @echo off
 echo Checking if script contains Administrative rights...
 net sessions
