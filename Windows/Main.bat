@@ -12,7 +12,6 @@ If %ERRORLEVEL% == 1 (
 :: Get list of users on the computer
 echo Users and Administrators output to %path%output\users.txt
 start C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "%path%resources\usrList.ps1"
-
 :main
 set /p mode="Auto or Manual mode? (a/m) "
 if %mode%==a goto auto
@@ -40,8 +39,9 @@ start C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "%path%resources
 goto:EOF
 
 :firewall
-echo Enabling firewall..
+echo Enabling firewall (make sure group policy is allowing modifications to the firewall)
 netsh advfirewall set allprofiles state on
+echo Firewall enabled
 echo Setting basic firewall rules..
 netsh advfirewall firewall set rule name="Remote Assistance (DCOM-In)" new enable=no 
 netsh advfirewall firewall set rule name="Remote Assistance (PNRP-In)" new enable=no 
@@ -60,13 +60,13 @@ echo Setting password policy...
 net accounts /lockoutthreshold:5 /MINPWLEN:8 /MAXPWAGE:30 /MINPWAGE:1 /UNIQUEPW:5 
 echo Set password policy: Password policy must meet complexity to enable
 echo Set password policy: Store passwords using reversible encryption to disabled
+echo Secpol.msc will be started for manual process
 start secpol.msc /wait
 pause
-echo Set password policy
 goto:EOF
 
 :audit
-echo Setting auditing success and failure for all categories...
+echo Setting auditing success and failure for all categories
 auditpol /set /category:* /success:enable
 auditpol /set /category:* /failure:enable
 echo Set auditing success and failure
@@ -271,15 +271,14 @@ powercfg -SETDCVALUEINDEX SCHEME_MAX SUB_NONE CONSOLELOCK 1
 echo Set power settings
 goto:EOF
 
-:::
 :netShare
-echo Echoing network shares to %path%output\shares.txt
+echo Echoing network shares to %path%output\shares.txt, make sure to check for out of place shares
 net share > %path%output\shares.txt
 echo Echoed network shares
 goto:EOF
 
 :flushDNS
-echo Flushing DNS...
+echo Flushing DNS
 ipconfig /flushdns >nul
 echo Flushed DNS
 echo Clearing contents of: C:\Windows\System32\drivers\etc\hosts
@@ -301,13 +300,14 @@ net user Guest /active:no && (
 	(call)
 ) || echo Guest account not disabled
 echo Disabled guest account
-echo Renaming Administrator to "Dude" and Guest to "LameDude"...
+echo Renaming Administrator to "Dude" and Guest to "LameDude"
 start C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe "%path%resources\RenameDefAccounts.ps1"
 echo Renamed Administrator to "Dude" and Guest to "LameDude"
 goto:EOF
 
 :passwords
-echo Making passwords expire, and setting password to: CyberPatriot1
+echo Making passwords expire, and setting password to: CyberPatriot1 IMPORTANT
+echo Please change the main account password after script
 for /f "tokens=*" %%a in ('type %path%resources\users.txt') do (
 	net user "%%a" "CyberPatriot1"
 	C:\Windows\System32\wbem\wmic UserAccount where Name="%%a" set PasswordExpires=True
