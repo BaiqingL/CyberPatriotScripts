@@ -413,12 +413,14 @@ goto MENU
 :Eight
 REM START SYS INTEG SCAN!
 echo "STARTING SYSTEM INTERGRITY SCAN"
+echo "If it fails make sure you can access Sfc.exe"
 Sfc.exe /scannow
 goto MENU
 :Nine
 REM PowerShell RootKit detection start
-echo "POWERSHELL ROOTKIT DETECTION WITH MALWAREBYTES ROOTKIT BETA"
-powershell Invoke-WebRequest -OutFile MBRTKit.exe https://data-cdn.mbamupdates.com/web/mbar-1.09.3.1001.exe
+echo "POWERSHELL ROOTKIT DETECTION WITH MALWAREBYTES ROOTKIT BETA (Requires powershell execution policy)"
+REM Downloads MalwareBytes scan file
+powershell Invoke-WebRequest -OutFile MBRTKit.exe https://data-cdn.mbamupdates.com/web/mbar-1.10.3.1001.exe
 MBRTKit.exe
 goto MENU
 PAUSE
