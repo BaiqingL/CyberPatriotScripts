@@ -1,6 +1,6 @@
 # CyberPatriotScripts
 
-https://www.uscyberpatriot.org/competition/training-materials/practice-images (Practice images) CURRENTLY DOWN
+https://www.uscyberpatriot.org/competition/training-materials/practice-images (Practice images)
 
 # Cyber Patriot Wellesley Team's automated script on securing the competition. For Cyber Patriot 2016-2018
 
@@ -19,9 +19,11 @@ Disables insecure information and processes.
 Displays startup programs for analysis.
 Displays file and folder owners for analysis.
 Deletes pirated files and displays for analysis.
+Installs antivirus from the internet (network connection required)
 
 # Linux
 Adds many manual IPTABLES rules.
 Scans for virues and potential exploits.
 Install and revise current sources.
 Search for viruses and install Anti-virus definitions via 3-rd party applications.
+Caution, may break some things because... linux
