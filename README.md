@@ -29,3 +29,4 @@ Scans for virues and potential exploits.
 Install and revise current sources.
 Search for viruses and install Anti-virus definitions via 3-rd party applications.
 Caution, may break some things because... linux
+Linux currently not working with only offline files updated
