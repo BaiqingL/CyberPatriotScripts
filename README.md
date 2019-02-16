@@ -8,7 +8,12 @@ https://www.uscyberpatriot.org/competition/training-materials/practice-images (P
 
 Only authorized for Wellesley team's usuage for 2016 - 2018, you may use this after the competition.
 
-Created by VBQL, Vuton, Khemri, James, and 5chm1dt.
+Created by Andy L, Ethan P, Luis H, James S, and Alden S.
+
+2017 - 2018: MA State 1st
+2018 - 2019: MA State 2nd
+
+Good luck to all future teams!
 
 # Features
 Auto-securing for Linux and Windows. A command compliation is in the folder for Cisco.
